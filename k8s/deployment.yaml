@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-auth
+  labels:
+    app: php-auth
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php-auth
+  template:
+    metadata:
+      labels:
+        app: php-auth
+    spec:
+      containers:
+        - name: php-auth
+          image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/php-auth:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: <RDS_ENDPOINT>
+            - name: DB_NAME
+              value: php_auth
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
