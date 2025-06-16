@@ -97,3 +97,4 @@ kubectl apply -f k8s/service.yaml
 3. Environment variables must point to your external database (e.g., Amazon RDS).
 
 ---
+# php_auth_project
